@@ -11,6 +11,8 @@ public class HTTPRequest {
 	private Map<String, String> headers = new HashMap<>();
 	private Object body;
 	
+	private int major;
+	private int minor;
 	
 	public HTTPRequest (HTTPCommand command, String path) {
 		this(command, path, null, null);
@@ -21,6 +23,22 @@ public class HTTPRequest {
 		setPath(path);
 		setHeaders(headers);
 		setBody(body);
+	}
+	
+	public int getMajor() {
+		return major;
+	}
+	
+	public void setMajor(int major) {
+		this.major=major;
+	}
+	
+	public int getMinor() {
+		return minor;
+	}
+	
+	public void setMinor(int minor) {
+		this.minor=minor;
 	}
 	
 	public Object getBody() {
