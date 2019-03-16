@@ -12,11 +12,11 @@ public class HTTPRequest {
 	private Object body;
 	
 	
-	public HTTPRequest (String command, String path) {
+	public HTTPRequest (HTTPCommand command, String path) {
 		this(command, path, null, null);
 	}
 	
-	public HTTPRequest (String command, String path, Map <String, String> headers, Object body) {
+	public HTTPRequest (HTTPCommand command, String path, Map <String, String> headers, Object body) {
 		setCommand(command);
 		setPath(path);
 		setHeaders(headers);
@@ -46,16 +46,16 @@ public class HTTPRequest {
 	}
 
 	private void setPath(String path) {
-		// TODO Auto-generated method stub
-		
+		if (path == null)
+			this.path="/";
+		else this.path=path;
 	}
 	
 	public HTTPCommand getCommand() {
 		return command;
 	}
 
-	private void setCommand(String command) {
-		// TODO Auto-generated method stub
-		
+	private void setCommand(HTTPCommand command) {
+		this.command = command;
 	}
 }

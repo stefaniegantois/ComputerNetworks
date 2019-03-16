@@ -7,11 +7,11 @@ public class Client {
 	private int port;
 	
 	public Client (String command, String URI, int port) {
-		setCommand (command);
-		setURI (URI);
+		//setCommand (command);
+		//setURI (URI);
 		//setHost (URI.substring(0, URI.indexOf("/")));
 		setPort (port);
-		new HTTPRequest (command,URI);
+		new HTTPRequest (HTTPCommand.fromString(command),URI);
 	}
 
 	public int getPort () {
