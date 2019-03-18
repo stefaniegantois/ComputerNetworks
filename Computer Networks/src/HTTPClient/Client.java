@@ -12,6 +12,7 @@ public class Client {
 		//setHost (URI.substring(0, URI.indexOf("/")));
 		setPort (port);
 		//new HTTPRequest (HTTPCommand.fromString(command),URI);
+		//dit is een test;
 	}
 
 	public int getPort () {
