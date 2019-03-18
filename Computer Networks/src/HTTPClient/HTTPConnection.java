@@ -23,6 +23,11 @@ public class HTTPConnection {
 		this.port=80;
 	}
 	
+	public HTTPConnection(String host, int port) {
+		this.host=host;
+		this.port=port;
+	}
+	
 	public int getPort() {
 		return port;
 	}

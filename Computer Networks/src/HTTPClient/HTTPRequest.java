@@ -23,6 +23,7 @@ public class HTTPRequest {
 		setPath(path);
 		setHeaders(headers);
 		setBody(body);
+		
 	}
 	
 	public int getMajor() {
