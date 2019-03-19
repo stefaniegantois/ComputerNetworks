@@ -24,13 +24,13 @@ public class Client {
 		//setHost(URI);
 		//setHost (URI.substring(0, URI.indexOf("/")));
 		setPort(port);
-		setVersion(new HTTPVersion(version));
+		this.version = new HTTPVersion(version);
 		if (getVersion().getMajor()!=1 || getVersion().getMinor()!=1) {
 			throw new IllegalArgumentException("unsupported version");
 		}
 		HTTPConnection connection = new HTTPConnection(host, port);
 		connection.openConnection();
-		HTTPRequest request = new HTTPRequest(getCommand(), getURI());
+		HTTPRequest request = new HTTPRequest(getCommand(), getURI(), this);
 		HTTPResponse response = connection.sendRequest(request);
 		
 	}
@@ -56,16 +56,6 @@ public class Client {
 	private void setPort(int port) {
 		this.port=port;
 	}
-	
-	/*public String getHost() {
-		return host;
-	}
-	
-	private void setHost(String host) {
-		System.out.println(host);
-		this.host=host;
-	}
-	*/
 
 	public String getURI () {
 		return URI;

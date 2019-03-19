@@ -16,21 +16,21 @@ public class HTTPRequest {
 	
 	
 	public HTTPRequest (HTTPCommand command, String path) throws URISyntaxException {
-		this(command, path, null,null, "");
+		this(command, path, null,null);
 	}
 	
 	public HTTPRequest (HTTPCommand command, String path, Client client) throws URISyntaxException {
-		this(command, path, null, client, "");
+		this(command, path, client,null);
 		
 	}
 
-	public HTTPRequest (HTTPCommand command, String URI, Client client, Map<String, String> headers, String body) throws URISyntaxException{
+	public HTTPRequest (HTTPCommand command, String URI, Client client, Map<String, String> headers) throws URISyntaxException{
 		setCommand(command);
 		setURI(URI);
 		setClient(client);
 		setHeaders(headers);
 		putHeader("HOST",getHost()+":"+getClient().getPort());
-		setBody(body);
+		putHeader("User-Agent","HTTPClientVM/1.1"); //what's this?
 	}
 	
 	public Client getClient() {
@@ -39,15 +39,6 @@ public class HTTPRequest {
 	
 	private void setClient(Client client) {
 		this.client = client;
-	}
-
-	//Body
-	public Object getBody() {
-		return this.body;
-	}
-	
-	private void setBody(String body) {
-		this.body = body;
 	}
 	
 	//Headers
@@ -115,4 +106,5 @@ public class HTTPRequest {
 				
 		return string;
 	}
+	
 }
