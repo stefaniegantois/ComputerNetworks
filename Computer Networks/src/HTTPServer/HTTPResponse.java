@@ -1,5 +1,7 @@
 package HTTPServer;
 
+import java.io.BufferedReader;
+
 import HTTPClient.HTTPRequest;
 
 public  class HTTPResponse {
@@ -10,6 +12,10 @@ public  class HTTPResponse {
 		
 	}
 	
+	public HTTPResponse(BufferedReader in, HTTPRequest request) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getStatus () {
 		switch(getStatusCode()) {
 		case 200:

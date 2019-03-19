@@ -3,8 +3,10 @@ package HTTPClient;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
+import HTTPServer.HTTPResponse;
+
 public class Client {
-	private String command;
+	private HTTPCommand command;
 	private String URI;
 	private String host;
 	private int port;
@@ -12,12 +14,6 @@ public class Client {
 	
 	public Client (String command, String URI, int port) throws UnknownHostException, IOException {
 		this(command,URI,port,"HTTP/1.1");
-		//setCommand (command);
-		//setURI (URI);
-		//setHost (URI.substring(0, URI.indexOf("/")));
-		setPort (port);
-		//new HTTPRequest (HTTPCommand.fromString(command),URI);
-		//dit is een test;
 	}
 	
 	public Client (String command, String URI, int port, String version) throws UnknownHostException, IOException {
@@ -25,12 +21,19 @@ public class Client {
 			throw new IllegalArgumentException(command + " is not recognized");
 		}
 		setCommand(command);
-		this.version = new HTTPVersion(version);
+		setURI(URI);
+		setHost(URI);
+		//setHost (URI.substring(0, URI.indexOf("/")));
+		setPort(port);
+		setVersion(new HTTPVersion(version));
 		if (getVersion().getMajor()!=1 || getVersion().getMinor()!=1) {
 			throw new IllegalArgumentException("unsupported version");
 		}
-		
-		new HTTPConnection(host, port).openConnection();
+		//new HTTPRequest (HTTPCommand.fromString(command),URI);
+		HTTPConnection connection = new HTTPConnection(host, port);
+		connection.openConnection();
+		HTTPRequest request = new HTTPRequest(getCommand(), getURI());
+		HTTPResponse response = connection.sendRequest(request);
 		
 	}
 	
@@ -73,12 +76,12 @@ public class Client {
 		this.URI = URI;
 	}
 	
-	public String getCommand () {
+	public HTTPCommand getCommand () {
 		return command;
 	}
 	
 	private void setCommand(String command) {
-		this.command = command;
+		this.command = HTTPCommand.fromString(command);
 	}
 	
 }

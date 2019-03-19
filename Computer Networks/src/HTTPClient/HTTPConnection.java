@@ -19,8 +19,7 @@ public class HTTPConnection {
 	private BufferedReader in; //To get the server's response
 	
 	public HTTPConnection (String host) {
-		this.host=host;
-		this.port=80;
+		this(host,80);
 	}
 	
 	public HTTPConnection(String host, int port) {
@@ -53,7 +52,10 @@ public class HTTPConnection {
 	}
 	
 	public HTTPResponse sendRequest(HTTPRequest request) {
-		return new HTTPResponse(request);
+		out.println(request.toString());
+		out.flush();
+		
+		return new HTTPResponse(in, request);
 	}
 
 }
