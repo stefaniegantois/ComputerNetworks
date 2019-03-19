@@ -1,9 +1,8 @@
 package HTTPClient;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
-
-import HTTPServer.HTTPResponse;
 
 public class Client {
 	private HTTPCommand command;
@@ -12,24 +11,23 @@ public class Client {
 	private int port;
 	private HTTPVersion version;
 	
-	public Client (String command, String URI, int port) throws UnknownHostException, IOException {
+	public Client (String command, String URI, int port) throws UnknownHostException, IOException, URISyntaxException {
 		this(command,URI,port,"HTTP/1.1");
 	}
 	
-	public Client (String command, String URI, int port, String version) throws UnknownHostException, IOException {
+	public Client (String command, String URI, int port, String version) throws UnknownHostException, IOException, URISyntaxException {
 		if (HTTPCommand.fromString(command)==null) {
 			throw new IllegalArgumentException(command + " is not recognized");
 		}
 		setCommand(command);
 		setURI(URI);
-		setHost(URI);
+		//setHost(URI);
 		//setHost (URI.substring(0, URI.indexOf("/")));
 		setPort(port);
 		setVersion(new HTTPVersion(version));
 		if (getVersion().getMajor()!=1 || getVersion().getMinor()!=1) {
 			throw new IllegalArgumentException("unsupported version");
 		}
-		//new HTTPRequest (HTTPCommand.fromString(command),URI);
 		HTTPConnection connection = new HTTPConnection(host, port);
 		connection.openConnection();
 		HTTPRequest request = new HTTPRequest(getCommand(), getURI());
@@ -59,7 +57,7 @@ public class Client {
 		this.port=port;
 	}
 	
-	public String getHost() {
+	/*public String getHost() {
 		return host;
 	}
 	
@@ -67,6 +65,7 @@ public class Client {
 		System.out.println(host);
 		this.host=host;
 	}
+	*/
 
 	public String getURI () {
 		return URI;

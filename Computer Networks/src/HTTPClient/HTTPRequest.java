@@ -1,5 +1,7 @@
 package HTTPClient;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,74 +9,110 @@ import java.util.Map;
 public class HTTPRequest {
 	
 	private HTTPCommand command;
-	private String path;
+	private URI uri;
 	private Map<String, String> headers = new HashMap<>();
 	private Object body;
+	private Client client;
 	
-	private int major;
-	private int minor;
 	
-	public HTTPRequest (HTTPCommand command, String path) {
-		this(command, path, null, null);
+	public HTTPRequest (HTTPCommand command, String path) throws URISyntaxException {
+		this(command, path, null,null, "");
 	}
 	
-	public HTTPRequest (HTTPCommand command, String path, Map <String, String> headers, Object body) {
+	public HTTPRequest (HTTPCommand command, String path, Client client) throws URISyntaxException {
+		this(command, path, null, client, "");
+		
+	}
+
+	public HTTPRequest (HTTPCommand command, String URI, Client client, Map<String, String> headers, String body) throws URISyntaxException{
 		setCommand(command);
-		setPath(path);
+		setURI(URI);
+		setClient(client);
 		setHeaders(headers);
+		putHeader("HOST",getHost()+":"+getClient().getPort());
 		setBody(body);
-		
 	}
 	
-	public int getMajor() {
-		return major;
+	public Client getClient() {
+		return this.client;
 	}
 	
-	public void setMajor(int major) {
-		this.major=major;
+	private void setClient(Client client) {
+		this.client = client;
 	}
-	
-	public int getMinor() {
-		return minor;
-	}
-	
-	public void setMinor(int minor) {
-		this.minor=minor;
-	}
-	
+
+	//Body
 	public Object getBody() {
-		return body;
+		return this.body;
 	}
 	
-	private void setBody(Object body) {
-		// TODO Auto-generated method stub
-		
+	private void setBody(String body) {
+		this.body = body;
+	}
+	
+	//Headers
+	public String getHeaderValue (String name) {
+		return this.headers.get(name);
 	}
 	
 	public Map<String,String> getHeaders() {
-		return headers;
+		return this.headers;
+	}
+	
+	private void putHeader(String name, String value) {
+		this.headers.put(name, value);
 	}
 
 	private void setHeaders(Map<String, String> headers) {
-		// TODO Auto-generated method stub
+		this.headers = headers;
 		
 	}
 	
+	//URI
 	public String getPath() {
-		return path;
-	}
-
-	private void setPath(String path) {
-		if (path == null)
-			this.path="/";
-		else this.path=path;
+		return uri.getPath();
 	}
 	
+	public String getHost() {
+		return uri.getHost();
+	}
+
+	private void setURI(String URI) throws URISyntaxException {
+		this.uri = new URI(URI);
+	}
+	
+	//Command
 	public HTTPCommand getCommand() {
 		return command;
 	}
 
 	private void setCommand(HTTPCommand command) {
 		this.command = command;
+	}
+	
+	@Override
+	public String toString () {
+		String string = "";
+		string += getCommand() + " ";
+		
+		String path = getPath();
+		if (path == null) {
+			path = "/";
+		}
+		string += getPath() + " ";
+		
+		if(getClient()==null) {
+			string += "HTTP/1.1\n";
+		} else {
+			string += getClient().getVersion().toString() + "\n";
+		}
+		
+		for (String name: getHeaders().keySet()) {
+			string += name +": " + getHeaderValue(name) + "\n";
+		}
+		
+		string += "\n";
+				
+		return string;
 	}
 }

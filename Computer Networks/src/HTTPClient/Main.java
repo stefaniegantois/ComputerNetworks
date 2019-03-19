@@ -1,11 +1,12 @@
 package HTTPClient;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 
 public class Main {
 	
-	public static void main(String[] args) throws UnknownHostException, IOException {
+	public static void main(String[] args) throws UnknownHostException, IOException, URISyntaxException {
 		for (String arg: args) {
 			System.out.println(arg);
 		}

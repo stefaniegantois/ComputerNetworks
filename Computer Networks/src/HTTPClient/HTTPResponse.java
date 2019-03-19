@@ -1,8 +1,6 @@
-package HTTPServer;
+package HTTPClient;
 
 import java.io.BufferedReader;
-
-import HTTPClient.HTTPRequest;
 
 public  class HTTPResponse {
 	

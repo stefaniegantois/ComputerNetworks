@@ -7,8 +7,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import HTTPServer.HTTPResponse;
-
 public class HTTPConnection {
 	
 	private final String host;
