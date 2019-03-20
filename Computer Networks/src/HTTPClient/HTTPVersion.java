@@ -12,7 +12,7 @@ public class HTTPVersion {
 	public HTTPVersion (String version) {
 		setMajor(Character.getNumericValue(version.charAt((version.indexOf(".")-1))));
 		setMinor(Character.getNumericValue(version.charAt((version.indexOf(".")+1))));
-		System.out.println("major " + major + " minor " + minor);
+		//System.out.println("major " + major + " minor " + minor);
 	}
 	
 	public void setMajor(int major) {

@@ -8,7 +8,7 @@ public class Main {
 	
 	public static void main(String[] args) throws UnknownHostException, IOException, URISyntaxException {
 		for (String arg: args) {
-			System.out.println(arg);
+			//System.out.println(arg);
 		}
 		if (args.length==0||args.length>4) {
 			throw new IllegalArgumentException("Unvalid arguments");

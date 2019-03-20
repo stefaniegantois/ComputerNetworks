@@ -28,9 +28,10 @@ public class Client {
 		if (getVersion().getMajor()!=1 || getVersion().getMinor()!=1) {
 			throw new IllegalArgumentException("unsupported version");
 		}
-		HTTPConnection connection = new HTTPConnection(host, port);
+		HTTPConnection connection = new HTTPConnection(URI, port);
 		connection.openConnection();
 		HTTPRequest request = new HTTPRequest(getCommand(), getURI(), this);
+		System.out.println(request.toString());
 		HTTPResponse response = connection.sendRequest(request);
 		
 	}

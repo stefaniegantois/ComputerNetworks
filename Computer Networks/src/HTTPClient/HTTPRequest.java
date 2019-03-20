@@ -9,28 +9,30 @@ import java.util.Map;
 public class HTTPRequest {
 	
 	private HTTPCommand command;
-	private URI uri;
+	private String uri;
 	private Map<String, String> headers = new HashMap<>();
 	private Object body;
 	private Client client;
+
 	
 	
 	public HTTPRequest (HTTPCommand command, String path) throws URISyntaxException {
-		this(command, path, null,null);
+		this(command, path, null,new HashMap<>());
 	}
 	
 	public HTTPRequest (HTTPCommand command, String path, Client client) throws URISyntaxException {
-		this(command, path, client,null);
+		this(command, path, client,new HashMap<>());
 		
 	}
 
 	public HTTPRequest (HTTPCommand command, String URI, Client client, Map<String, String> headers) throws URISyntaxException{
+		//System.out.println(URI);
 		setCommand(command);
 		setURI(URI);
 		setClient(client);
 		setHeaders(headers);
-		putHeader("HOST",getHost()+":"+getClient().getPort());
-		putHeader("User-Agent","HTTPClientVM/1.1"); //what's this?
+		putHeader("Host",getHost()+":"+getClient().getPort());
+		putHeader("User-Agent","HTTPClientVM"); 
 	}
 	
 	public Client getClient() {
@@ -60,16 +62,19 @@ public class HTTPRequest {
 	}
 	
 	//URI
-	public String getPath() {
-		return uri.getPath();
-	}
-	
+//	public String getPath() {
+//		return uri.getPath();
+//	}
+//	
 	public String getHost() {
-		return uri.getHost();
+		int i;
+		if ((i = uri.indexOf("/")) != -1)
+			return uri.substring(0, i);
+		return uri;
 	}
 
-	private void setURI(String URI) throws URISyntaxException {
-		this.uri = new URI(URI);
+	private void setURI(String uri) throws URISyntaxException {
+		this.uri = uri;
 	}
 	
 	//Command
@@ -86,11 +91,12 @@ public class HTTPRequest {
 		String string = "";
 		string += getCommand() + " ";
 		
-		String path = getPath();
-		if (path == null) {
-			path = "/";
-		}
-		string += getPath() + " ";
+//		String path = "/";
+//		String path = getPath();
+//		if (path == null) {
+//			path = "/";
+//		}
+		string += getHost() + " ";
 		
 		if(getClient()==null) {
 			string += "HTTP/1.1\n";

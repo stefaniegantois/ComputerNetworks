@@ -49,7 +49,7 @@ public class HTTPConnection {
 		}
 	}
 	
-	public HTTPResponse sendRequest(HTTPRequest request) {
+	public HTTPResponse sendRequest(HTTPRequest request) throws IOException {
 		out.println(request.toString());
 		out.flush();
 		
